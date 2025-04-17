@@ -16,12 +16,55 @@ import {
   SuiIcon,
   StarknetIcon,
 } from "@dynamic-labs/iconic";
+import { getOrMapViemChain } from "@dynamic-labs/ethereum-core";
 import { CosmosWalletConnectors } from "@dynamic-labs/cosmos";
 import { StarknetWalletConnectors } from "@dynamic-labs/starknet";
 import { SuiWalletConnectors } from "@dynamic-labs/sui";
 
+const customEvmNetworks = [
+  {
+    blockExplorerUrls: ["https://hyperfoundation.org"],
+    chainId: 999,
+    chainName: "HyperEVM",
+    iconUrls: ["https://s2.coinmarketcap.com/static/img/coins/64x64/32196.png"],
+    name: "Hyperliquid",
+    nativeCurrency: {
+      decimals: 18,
+      name: "Hyperliquid",
+      symbol: "HYPE",
+      iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/32196.png",
+    },
+    networkId: 999,
+    rpcUrls: ["https://rpc.hyperliquid.xyz/evm"],
+    vanityName: "Hyperliquid",
+  },
+  {
+    blockExplorerUrls: ["https://app.roninchain.com"],
+    chainId: 2020,
+    chainName: "Ronin",
+    iconUrls: ["https://cryptologos.cc/logos/ronin-ron-logo.svg"],
+    name: "Ronin",
+    nativeCurrency: {
+      decimals: 18,
+      name: "Ronin",
+      symbol: "RON",
+      iconUrl: "https://cryptologos.cc/logos/ronin-ron-logo.svg",
+    },
+    networkId: 2020,
+    rpcUrls: ["https://api.roninchain.com/rpc"],
+    vanityName: "Ronin",
+  },
+];
+
 const config = createConfig({
-  chains: [mainnet, base, bsc, opBNB, celo],
+  chains: [
+    mainnet,
+    base,
+    bsc,
+    opBNB,
+    celo,
+    ...customEvmNetworks.map(getOrMapViemChain),
+  ],
   multiInjectedProviderDiscovery: false,
   client({ chain }) {
     return createClient({
